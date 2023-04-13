@@ -49,7 +49,7 @@ startproject() {
     cp -r .stubs/{docker-compose.yml,mysqldump.sh,.env,config} $project_dir
     
 
-    fill_templates "$project_name" $project_dir
+    fill_templates $project_dir $project_name 
 
 
     # Ask git repository address
