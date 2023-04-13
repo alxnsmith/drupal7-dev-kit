@@ -22,6 +22,7 @@ fill_templates() {
 startproject() {
     # Get project name
     local project_name=$2
+    local project_dir=projects/$2
 
     # Project name must be provided
     if [ -z "$project_name" ]; then
@@ -32,11 +33,11 @@ startproject() {
     echo "Start $project_name project"
     
     # If $project_name folder exists - ask replace
-    if [ -d "$project_name" ]; then
-        read -p "Folder $project_name already exists. Replace? [y/n] " -n 1 -r
+    if [ -d "$project_dir" ]; then
+        read -p "Folder $project_dir already exists. Replace? [y/n] " -n 1 -r
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
-            rm -rf $project_name
+            rm -rf $project_dir
         else
             echo "Exit"
             exit 1
@@ -44,11 +45,11 @@ startproject() {
     fi
     
     # Create project folder
-    mkdir -p $project_name/{backup,config,db-data,drupal-data,git}
-    cp -r .stubs/{docker-compose.yml,mysqldump.sh,.env,config} $project_name
+    mkdir -p $project_dir/{backup,config,db-data,drupal-data,git}
+    cp -r .stubs/{docker-compose.yml,mysqldump.sh,.env,config} $project_dir
     
 
-    fill_templates "$project_name" $project_name
+    fill_templates "$project_name" $project_dir
 
 
     # Ask git repository address
@@ -64,7 +65,7 @@ startproject() {
         git_branch="master"
     fi
 
-    git clone --branch $git_branch $git_repo $project_name/git
+    git clone --branch $git_branch $git_repo $project_dir/git
 }
 
 $command $@

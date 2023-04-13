@@ -1,4 +1,2 @@
-*
-!.gitignore
-!.stubs
-!manage.sh
+projects/*
+!.gitkeep
