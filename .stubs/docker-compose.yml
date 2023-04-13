@@ -10,6 +10,7 @@ services:
     env_file: .env
     volumes:
       - ./db-data/:/docker-entrypoint-initdb.d/
+      - ./config/mysqld/:/etc/mysql/conf.d/
 
   drupal:
     build:
@@ -27,6 +28,12 @@ services:
       - type: bind
         source: ${PWD}/config/php/uploads.ini
         target: /usr/local/etc/php/conf.d/opcache.ini
+      - type: bind
+        source: ${PWD}/config/php/xdebug.ini
+        target: /usr/local/etc/php/conf.d/xdebug.ini
+      - type: bind
+        source: ${PWD}/config/php/uploads.ini
+        target: /usr/local/etc/php/conf.d/uploads.ini
 
 
   pma:
