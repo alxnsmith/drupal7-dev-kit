@@ -22,7 +22,7 @@ fill_templates() {
 startproject() {
     # Get project name
     local project_name=$2
-    local project_dir=projects/$2
+    local project_dir=projects/$project_name
 
     # Project name must be provided
     if [ -z "$project_name" ]; then
@@ -35,9 +35,9 @@ startproject() {
     # If $project_name folder exists - ask replace
     if [ -d "$project_dir" ]; then
         read -p "Folder $project_dir already exists. Replace? [y/n] " -n 1 -r
-        echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             rm -rf $project_dir
+            echo "Project $project_name has been removed, make new."
         else
             echo "Exit"
             exit 1
@@ -55,17 +55,19 @@ startproject() {
     # Ask git repository address
     read -p "Git repository address: " git_repo
     if [ -z "$git_repo" ]; then
-        echo "Git repository address must be provided"
+        echo "Git repository address not provided. Done."
         exit 1
     fi
 
     # Ask git branch
     read -p "Git branch [master]: " git_branch
+    project_git_dir=$project_dir/git
     if [ -z "$git_branch" ]; then
         git_branch="master"
     fi
-
-    git clone --branch $git_branch $git_repo $project_dir/git
+    
+    echo "Clone $git_repo on $git_branch branch into $project_git_dir"
+    git clone --branch $git_branch $git_repo $project_git_dir
 }
 
 $command $@
