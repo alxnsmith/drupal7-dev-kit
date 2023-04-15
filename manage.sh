@@ -66,7 +66,7 @@ startproject() {
         git_branch="master"
     fi
     
-    echo "Clone $git_repo on $git_branch branch into $project_git_dir"
+    echo "Cloning $git_repo on $git_branch branch into $project_git_dir"
     git clone --branch $git_branch $git_repo $project_git_dir
 }
 
