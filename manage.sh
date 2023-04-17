@@ -46,7 +46,7 @@ startproject() {
     
     # Create project folder
     mkdir -p $project_dir/{backup,config,db-data,drupal-data,git}
-    cp -r .stubs/{docker-compose.yml,mysqldump.sh,.env,config} $project_dir
+    cp -r .stubs/{docker-compose.yml,docker,mysqldump.sh,.env,config} $project_dir
     
 
     fill_templates $project_dir $project_name 
